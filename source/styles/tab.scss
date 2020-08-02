@@ -1,0 +1,39 @@
+@import "base/fonts";
+@import "base/reset";
+@import "base/variables";
+
+body {
+  color: $black;
+  background-color: $greyWhite;
+  font-size: 100%;
+  font-family: $nunito;
+}
+
+#tab {
+  min-height: 100vh;
+  display: flex;
+
+  main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    .counter {
+      display: flex;
+      align-items: baseline;
+
+      h1 {
+        font-size: 4.75rem;
+        margin: 0;
+      }
+  
+      span {
+        font-size: 2rem;
+        min-width: 200px;
+        color: $skyBlue;
+      }
+    }
+
+  }
+}
