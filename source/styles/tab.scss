@@ -7,7 +7,8 @@
   display: flex;
   color: $black;
   background-color: $greyWhite;
-  font-size: 100%;
+  font-size: 1rem;
+  position: relative;
 
   main {
     display: flex;
@@ -28,6 +29,54 @@
         font-size: 2rem;
         min-width: 200px;
         color: $skyBlue;
+      }
+    }
+  }
+
+  #modal {
+    position: absolute;
+    background-color: rgba($color: #000000, $alpha: 0.25);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.hidden {
+      display: none;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 4rem;
+      background-color: #ffffff;
+      border-radius: 0.25rem;
+      box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+
+      input {
+        padding: 0.25rem 1rem;
+        border-radius: 0.25rem;
+
+        &[type=date] {
+          border-width: 1px;
+          border-style: solid;
+          border-color: rgba($color: #000000, $alpha: 0.25);
+        }
+
+        &[type=submit] {
+          margin-top: 0.5rem;
+          border-width: 1px;
+          border-style: solid;
+          border-color: rgba($color: #000000, $alpha: 0.25);
+          background-color: transparent;
+
+          &:hover,
+          &:focus {
+            color: #ffffff;
+            background-color: #000000;
+          }
+        }
       }
     }
   }

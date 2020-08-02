@@ -1,31 +1,57 @@
+import browser from 'webextension-polyfill'
+
 document.addEventListener('DOMContentLoaded', async () => {
+  init()
+})
+
+async function init () {
+  // browser.storage.sync.clear()
+
   const currentYear = new Date().getFullYear()
 
   const startOfCurrentYear = new Date(currentYear, 0, 1)
   const startOfNextYear = new Date(currentYear + 1, 0, 1)
   const millisecondsInCurrentYear = startOfNextYear - startOfCurrentYear
 
-  console.log('millisecondsInCurrentYear', millisecondsInCurrentYear)
+  const { dateOfBirth } = await browser.storage.sync.get()
 
-  startLoop({ millisecondsInCurrentYear })
-})
+  if (!dateOfBirth) {
+    try {
+      const value = await showPrompt()
 
-function startLoop ({ millisecondsInCurrentYear }) {
-  const dob = new Date(1996, 2, 14)
+      const dateParts = value
+        .split('-')
+        .map(i => +i)
 
-  console.log('dob', dob)
+      const dateOfBirth = `${new Date(dateParts[0], dateParts[1] - 1, dateParts[2])}`
 
-  loop({ dob, millisecondsInCurrentYear })
+      browser.storage.sync.set({
+        dateOfBirth
+      })
+
+      startLoop({ dateOfBirth, millisecondsInCurrentYear })
+    } catch (e) {
+      console.log(e)
+    }
+
+    return
+  }
+
+  startLoop({ dateOfBirth, millisecondsInCurrentYear })
+}
+
+function startLoop ({ dateOfBirth, millisecondsInCurrentYear }) {
+  loop({ dateOfBirth, millisecondsInCurrentYear })
 
   setInterval(() => {
-    loop({ dob, millisecondsInCurrentYear })
+    loop({ dateOfBirth, millisecondsInCurrentYear })
   }, 10)
 }
 
-function loop ({ dob, millisecondsInCurrentYear }) {
+function loop ({ dateOfBirth, millisecondsInCurrentYear }) {
   const now = new Date()
 
-  const difference = now - dob
+  const difference = now - new Date(dateOfBirth)
   const fullYears = difference / millisecondsInCurrentYear
   const fullYearsAndMillisecond = fullYears.toFixed(9).toString().split('.')
 
@@ -45,4 +71,27 @@ function render ({ years, millisecond }) {
 
   yearsEl.innerText = years
   millisecondEl.innerText = millisecond
+}
+
+function showPrompt () {
+  const modal = document.getElementById('modal')
+  const form = document.forms.dateOfBirthForm
+
+  modal.classList.remove('hidden')
+
+  return new Promise((resolve, reject) => {
+    form.onsubmit = function () {
+      const dot = form.dateOfBirth.value
+
+      if (!dot) {
+        return false
+      }
+
+      modal.classList.add('hidden')
+
+      resolve(dot)
+
+      return false
+    }
+  })
 }
