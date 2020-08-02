@@ -2,16 +2,12 @@
 @import "base/reset";
 @import "base/variables";
 
-body {
-  color: $black;
-  background-color: $greyWhite;
-  font-size: 100%;
-  font-family: $nunito;
-}
-
 #tab {
   min-height: 100vh;
   display: flex;
+  color: $black;
+  background-color: $greyWhite;
+  font-size: 100%;
 
   main {
     display: flex;
@@ -34,6 +30,5 @@ body {
         color: $skyBlue;
       }
     }
-
   }
 }
