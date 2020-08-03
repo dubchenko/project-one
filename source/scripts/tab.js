@@ -70,7 +70,7 @@ function render ({ years, millisecond }) {
   }
 
   yearsEl.innerText = years
-  millisecondEl.innerText = millisecond
+  millisecondEl.innerText = `.${millisecond}`
 }
 
 function showPrompt () {
