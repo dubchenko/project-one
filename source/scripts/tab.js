@@ -1,17 +1,17 @@
 import browser from 'webextension-polyfill'
+import { test } from './test.js'
+
+const MS_IN_YEAR = 31536000000
+const MS_IN_LEAP_YEAR = 31622400000
+const MS_IN_AVG_YEAR = (3 * MS_IN_YEAR + MS_IN_LEAP_YEAR) / 4
 
 document.addEventListener('DOMContentLoaded', async () => {
   init()
+  console.log(test())
 })
 
 async function init () {
   // browser.storage.sync.clear()
-
-  const currentYear = new Date().getFullYear()
-
-  const startOfCurrentYear = new Date(currentYear, 0, 1)
-  const startOfNextYear = new Date(currentYear + 1, 0, 1)
-  const millisecondsInCurrentYear = startOfNextYear - startOfCurrentYear
 
   const { dateOfBirth } = await browser.storage.sync.get()
 
@@ -29,7 +29,7 @@ async function init () {
         dateOfBirth
       })
 
-      startLoop({ dateOfBirth, millisecondsInCurrentYear })
+      startLoop({ dateOfBirth })
     } catch (e) {
       console.log(e)
     }
@@ -37,23 +37,24 @@ async function init () {
     return
   }
 
-  startLoop({ dateOfBirth, millisecondsInCurrentYear })
+  startLoop({ dateOfBirth })
 }
 
-function startLoop ({ dateOfBirth, millisecondsInCurrentYear }) {
-  loop({ dateOfBirth, millisecondsInCurrentYear })
+function startLoop ({ dateOfBirth }) {
+  loop({ dateOfBirth })
 
   setInterval(() => {
-    loop({ dateOfBirth, millisecondsInCurrentYear })
-  }, 10)
+    loop({ dateOfBirth })
+  }, 85)
 }
 
-function loop ({ dateOfBirth, millisecondsInCurrentYear }) {
-  const now = new Date()
+export function loop ({ currentDate = new Date(), dateOfBirth }) {
+  const differenceInMs = currentDate - new Date(dateOfBirth)
 
-  const difference = now - new Date(dateOfBirth)
-  const fullYears = difference / millisecondsInCurrentYear
-  const fullYearsAndMillisecond = fullYears.toFixed(9).toString().split('.')
+  const fullYearsAndMillisecond = (differenceInMs / MS_IN_AVG_YEAR)
+    .toFixed(9)
+    .toString()
+    .split('.')
 
   render({
     years: fullYearsAndMillisecond[0],
