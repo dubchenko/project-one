@@ -5,15 +5,18 @@
 #tab {
   position: relative;
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  color: #f5f5f5;
-  background: #1a1a1a;
+  color: var(--text);
+  background: var(--background);
 
   main {
     display: flex;
+    flex: 1;
     align-items: center;
     justify-content: center;
     width: 100%;
+    padding: 1rem;
 
     .counter {
       display: flex;
@@ -25,19 +28,42 @@
         margin-top: 1em;
         margin-right: 0.25rem;
         font-size: 0.5em;
-        opacity: 0.1;
+        color: var(--muted);
       }
 
       #years {
         margin: 0;
         font-size: 3.75em;
+        color: var(--text);
       }
 
       #millisecond {
         min-width: 205px;
         margin-top: 0.35em;
         font-size: 1.25em;
-        opacity: 0.5;
+        color: var(--gray);
+      }
+    }
+  }
+
+  footer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    color: var(--accent);
+    text-align: center;
+
+    #colorMode {
+      position: absolute;
+      right: 2rem;
+      color: var(--gray);
+      cursor: pointer;
+      user-select: none;
+
+      &:hover {
+        color: var(--primary);
       }
     }
   }

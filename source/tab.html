@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instant</title>
+  <title>New Tab</title>
   <link rel="stylesheet" href="css/tab.css" />
 </head>
 
@@ -12,15 +12,25 @@
   <div id="tab">
     <main>
       <div class="counter">
-        <span class="age">age</span>
+        <span class="age">уже</span>
         <h1 id="years"></h1>
         <span id="millisecond"></span>
       </div>
     </main>
 
+    <footer>
+      УЖЕ!
+      <div id="colorMode">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24" viewBox="0 0 412.16 412.16">
+          <defs/>
+          <path d="M326.72 120.747L206.08 0 85.44 120.747c-66.667 66.667-66.667 174.72 0 241.387 33.28 33.28 77.013 50.027 120.64 50.027s87.36-16.64 120.64-50.027c66.667-66.667 66.667-174.721 0-241.387zm-120.64 248.64c-34.24 0-66.347-13.333-90.453-37.547-24.213-24.107-37.547-56.213-37.547-90.453s13.333-66.347 37.547-90.56l90.453-90.453v309.013z"/>
+        </svg>
+      </div>
+      
+    </footer>
+
     <div id="modal" class="hidden">
       <form name="dateOfBirthForm">
-        <!-- <label for="dateOfBirth">Enter your date of birth</label> -->
         <input 
           name="dateOfBirth"
           type="date" />
