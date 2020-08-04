@@ -1,13 +1,8 @@
 import browser from 'webextension-polyfill'
-import { test } from './test.js'
-
-const MS_IN_YEAR = 31536000000
-const MS_IN_LEAP_YEAR = 31622400000
-const MS_IN_AVG_YEAR = (3 * MS_IN_YEAR + MS_IN_LEAP_YEAR) / 4
+import { caclInterval } from './interval.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
   init()
-  console.log(test())
 })
 
 async function init () {
@@ -45,20 +40,18 @@ function startLoop ({ dateOfBirth }) {
 
   setInterval(() => {
     loop({ dateOfBirth })
-  }, 85)
+  }, 50)
 }
 
-export function loop ({ currentDate = new Date(), dateOfBirth }) {
-  const differenceInMs = currentDate - new Date(dateOfBirth)
-
-  const fullYearsAndMillisecond = (differenceInMs / MS_IN_AVG_YEAR)
-    .toFixed(9)
-    .toString()
-    .split('.')
+function loop ({ dateOfBirth }) {
+  const { years, millisecond } = caclInterval({
+    currentDate: new Date(),
+    dateOfBirth: new Date(dateOfBirth)
+  })
 
   render({
-    years: fullYearsAndMillisecond[0],
-    millisecond: fullYearsAndMillisecond[1]
+    years,
+    millisecond
   })
 }
 
